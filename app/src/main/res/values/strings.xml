@@ -43,4 +43,9 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="search_hint">検索</string>
+    <string name="button_settings">設定</string>
+    <string name="button_camera">撮影</string>
+    <string name="button_home">ホーム</string>
+    <string name="button_my_post">自分の投稿</string>
 </resources>
