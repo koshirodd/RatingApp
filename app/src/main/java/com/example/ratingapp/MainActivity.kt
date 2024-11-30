@@ -1,14 +1,17 @@
 package com.example.ratingapp
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.widget.Button
+import android.widget.EditText
 import com.example.ratingapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,20 +20,47 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     // アプリ起動時に実行されるメソッド。画面作成やデータの用意など初期処理を行う。
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.home_main)
 
-        setSupportActionBar(binding.toolbar)
+        // 検索フィールド内の虫眼鏡アイコン
+        val searchInput = findViewById<EditText>(R.id.searchInput)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+        // TODO: メソッド切り分け
+        searchInput.setOnTouchListener { v, event ->
+            // ACTION_UP = タップして指を離す動作
+            if (event.action == MotionEvent.ACTION_UP) {
+                // アイコンの範囲内（範囲 = 2）をタップしたかどうか。
+                val iconRange = 2
+                if (event.x >= (searchInput.right - searchInput.compoundDrawables[iconRange].bounds.width())) {
+                    // Accessibilityのためクリックしたことにする必要があるらしい
+                    println("Magnifying glass icon clicked")
+                    v.performClick()
+                    // 検索内容がからではなければアイコンをクリックした際に画面遷移する。
+                    val searchCondition = searchInput.text.toString().trim()
+                    if (searchCondition.isNotEmpty()) {
+                        val intent = Intent(this, SearchResultActivity::class.java)
+                        // 検索内容を"SearchCondition"として遷移先画面に渡す。
+                        intent.putExtra("SearchCondition", searchCondition)
+                        startActivity(intent)
+                    } else {
+                        // TODO: 検索条件が入力されなかった場合の処理。画面上に何か警告を出す？
+                    }
+                    // イベントが実行されたことになる。
+                    return@setOnTouchListener true  // Indicate that the event was handled
+                }
+            }
+            false
         }
+
+
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
