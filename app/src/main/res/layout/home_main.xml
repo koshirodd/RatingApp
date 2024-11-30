@@ -10,14 +10,14 @@
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuidePercent="0.1" /> <!-- 10% of screen height -->
+        app:layout_constraintGuide_percent="0.1" /> <!-- 10% of screen height -->
 
     <!-- 画面下部のガイドライン。これを設定すると画面上部は画面の下から10％を使用するらしい。 -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuidePercent="0.9" /> <!-- 90% of screen height -->
+        app:layout_constraintGuide_percent="0.9" /> <!-- 90% of screen height -->
 
     <!-- 画面上部の検索フィールド、設定ボタンのコンテナ -->
     <LinearLayout
