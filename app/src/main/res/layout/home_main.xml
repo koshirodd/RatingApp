@@ -17,7 +17,7 @@
         android:id="@+id/guideline_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.9" /> <!-- 90% of screen height -->
+        app:layout_constraintGuide_begin="370dp" /> <!-- 90% of screen height -->
 
     <!-- 画面上部の検索フィールド、設定ボタンのコンテナ -->
     <LinearLayout
@@ -56,9 +56,10 @@
     <!-- 投稿が表示されるセクション -->
     <ScrollView
         android:id="@+id/mainSection"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:paddingTop="40dp"
         app:layout_constraintTop_toBottomOf="@id/searchBar"
         app:layout_constraintBottom_toTopOf="@id/buttonContainer"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,14 +71,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+            <include layout="@layout/post_main"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Main content goes here"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@android:color/black" />
         </LinearLayout>
     </ScrollView>
 
