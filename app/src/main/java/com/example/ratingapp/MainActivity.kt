@@ -1,8 +1,11 @@
 package com.example.ratingapp
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,21 +13,36 @@ import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.example.ratingapp.databinding.ActivityMainBinding
+import android.widget.ImageView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.ratingapp.databinding.HomeMainBinding
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding:HomeMainBinding
+
+    //Cameraアクティビティを起動するためのランチャーオブジェクト
+    private val _cameraLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        ActivityResultCallbackFromCamera())
+
+    //保存された画像のURI
+    private var _imageUri : Uri? = null
 
     // アプリ起動時に実行されるメソッド。画面作成やデータの用意など初期処理を行う。
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = HomeMainBinding.inflate(layoutInflater)
         setContentView(R.layout.home_main)
 
         // 検索フィールド内の虫眼鏡アイコン
@@ -78,9 +96,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+
+    fun onCameraImageClick(view: View){
+        val dateformat = SimpleDateFormat("yyyyMMddHHmmss")
+        val now = Date()
+
+        val nowstr = dateformat.format(now)
+        val filename = "CameraIntentSamplePhoto_${nowstr}.jpg"
+
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, filename)
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+
+        _imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,_imageUri)
+        _cameraLauncher.launch(intent)
+    }
+
+    private inner class ActivityResultCallbackFromCamera: ActivityResultCallback<ActivityResult> {
+               override fun onActivityResult(result: ActivityResult){
+            if (result.resultCode == RESULT_OK){
+                //画像を表示するImageView取得
+                /*
+                val ivCamera = findViewById<ImageView>(R.id.cameraButton)
+                ivCamera.setImageURI(_imageUri)
+                */
+            }
+        }
     }
 }
