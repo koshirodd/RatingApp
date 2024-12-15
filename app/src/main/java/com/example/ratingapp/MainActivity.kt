@@ -117,14 +117,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private inner class ActivityResultCallbackFromCamera: ActivityResultCallback<ActivityResult> {
-               override fun onActivityResult(result: ActivityResult){
-            if (result.resultCode == RESULT_OK){
+        override fun onActivityResult(result: ActivityResult){
+           /* if (result.resultCode == RESULT_OK){
                 //画像を表示するImageView取得
-                /*
+
                 val ivCamera = findViewById<ImageView>(R.id.cameraButton)
                 ivCamera.setImageURI(_imageUri)
-                */
-            }
+
+            }*/
         }
     }
 }
