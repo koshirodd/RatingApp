@@ -1,35 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 画面上部のガイドライン。これを設定すると画面上部は画面の上から10％を使用するらしい。 -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.1" /> <!-- 10% of screen height -->
-
-    <!-- 画面下部のガイドライン。これを設定すると画面上部は画面の下から10％を使用するらしい。 -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintGuide_begin="370dp" /> <!-- 90% of screen height -->
-
     <!-- 画面上部の検索フィールド、設定ボタンのコンテナ -->
     <LinearLayout
-        android:id="@+id/searchBar"
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_alignParentTop="true">
 
         <!-- 検索フィールド -->
         <EditText
@@ -37,45 +22,40 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/search_hint"
-            android:inputType="text"
-            android:padding="12dp"
+            android:autofillHints="search"
             android:drawableEnd="@android:drawable/ic_search_category_default"
             android:drawablePadding="8dp"
-            android:autofillHints="search" />
+            android:hint="@string/search_hint"
+            android:inputType="text"
+            android:padding="12dp" />
 
         <!-- 設定ボタン -->
         <Button
             android:id="@+id/settingsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_settings"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:text="@string/button_settings" />
     </LinearLayout>
 
-    <!-- 投稿が表示されるセクション -->
-    <ScrollView
-        android:id="@+id/mainSection"
+<!--投稿が表示されるセクション-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_section"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:paddingTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/searchBar"
-        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/search_bar"
+        android:layout_above="@id/bottom_bar"
+        android:fadeScrollbars="false"
+        />
 
-    <!-- セクション内のコンテンツ -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <include layout="@layout/post_main"/>
+    <include
+        android:id="@+id/bottom_bar"
+        layout="@layout/bottom_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"/>
 
-        </LinearLayout>
-    </ScrollView>
-
-    <include layout="@layout/bottom_bar"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

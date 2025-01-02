@@ -6,20 +6,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ratingapp.databinding.HomeMainBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -38,46 +34,50 @@ class MainActivity : AppCompatActivity() {
     private var _imageUri : Uri? = null
 
     // アプリ起動時に実行されるメソッド。画面作成やデータの用意など初期処理を行う。
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = HomeMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.home_main)
+        setContentView(binding.root)
 
         // 検索フィールド内の虫眼鏡アイコン
-        val searchInput = findViewById<EditText>(R.id.searchInput)
+        val searchInput = binding.searchInput
 
-        // TODO: メソッド切り分け
+        val recyclerView = binding.mainSection
+
+        // 縦にリスト内のアイテムを表示するためにLinearLayoutManagerを使う。
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = PostAdapter(getPosts())
+
+        setupSearchInputTouchListener()
+    }
+
+    // 虫眼鏡アイコンをクリックした際の挙動
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupSearchInputTouchListener() {
+        val searchInput = binding.searchInput
         searchInput.setOnTouchListener { v, event ->
-            // ACTION_UP = タップして指を離す動作
+            // ACTION_UP = Tap and release action
             if (event.action == MotionEvent.ACTION_UP) {
-                // アイコンの範囲内（範囲 = 2）をタップしたかどうか。
                 val iconRange = 2
                 if (event.x >= (searchInput.right - searchInput.compoundDrawables[iconRange].bounds.width())) {
-                    // Accessibilityのためクリックしたことにする必要があるらしい
                     println("Magnifying glass icon clicked")
                     v.performClick()
-                    // 検索内容がからではなければアイコンをクリックした際に画面遷移する。
                     val searchCondition = searchInput.text.toString().trim()
                     if (searchCondition.isNotEmpty()) {
                         val intent = Intent(this, SearchResultActivity::class.java)
-                        // 検索内容を"SearchCondition"として遷移先画面に渡す。
                         intent.putExtra("SearchCondition", searchCondition)
                         startActivity(intent)
                     } else {
-                        // TODO: 検索条件が入力されなかった場合の処理。画面上に何か警告を出す？
+                        // TODO: Handle empty search condition
                     }
-                    // イベントが実行されたことになる。
-                    return@setOnTouchListener true  // Indicate that the event was handled
+                    return@setOnTouchListener true
                 }
             }
             false
         }
-
-
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -114,6 +114,15 @@ class MainActivity : AppCompatActivity() {
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT,_imageUri)
         _cameraLauncher.launch(intent)
+    }
+
+    // dbからデータを取得していないので手動で定義して返す。
+    private fun getPosts():List<PostModel>{
+        return listOf(
+            PostModel(R.drawable.test_image, "Sample Post 1"),
+            PostModel(R.drawable.test_image, "Sample Post 2"),
+            PostModel(R.drawable.test_image, "Sample Post 3")
+        )
     }
 
     private inner class ActivityResultCallbackFromCamera: ActivityResultCallback<ActivityResult> {

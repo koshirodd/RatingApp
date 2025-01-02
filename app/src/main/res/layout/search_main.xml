@@ -5,14 +5,15 @@
              android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/SearchCondition"
+        android:id="@+id/search_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create search result screen here"
+        android:text="検索結果画面は未実装なのでホームに戻る。"
         android:gravity="center"
         android:textSize="18sp"
         android:textColor="@android:color/black"
-        tools:ignore="MissingConstraints" />
-
+        android:clickable="true"
+        android:focusable="true"
+        tools:ignore="MissingConstraints"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
