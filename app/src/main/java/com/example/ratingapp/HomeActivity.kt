@@ -10,17 +10,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ratingapp.databinding.HomeMainBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class MainActivity : BaseActivity() {
+class HomeActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding:HomeMainBinding
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         // 検索フィールド内の虫眼鏡アイコン
-        val searchInput = binding.searchInput
+        val searchInput = binding.searchBar.root.findViewById<EditText>(R.id.search_input)
 
         val recyclerView = binding.mainSection
 
@@ -50,13 +50,12 @@ class MainActivity : BaseActivity() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = PostAdapter(getPosts())
 
-        setupSearchInputTouchListener()
+        setupSearchInputTouchListener(searchInput)
     }
 
     // 虫眼鏡アイコンをクリックした際の挙動
     @SuppressLint("ClickableViewAccessibility")
-    private fun setupSearchInputTouchListener() {
-        val searchInput = binding.searchInput
+    private fun setupSearchInputTouchListener(searchInput : EditText) {
         searchInput.setOnTouchListener { v, event ->
             // ACTION_UP = Tap and release action
             if (event.action == MotionEvent.ACTION_UP) {

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.RatingApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.RatingApp">
             <intent-filter>
@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MyPostActivity" />
         <activity android:name=".SearchResultActivity" />
     </application>
 

@@ -6,37 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 画面上部の検索フィールド、設定ボタンのコンテナ -->
-    <LinearLayout
+    <include
         android:id="@+id/search_bar"
-        android:layout_width="match_parent"
+        layout="@layout/search_bar"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:layout_alignParentTop="true">
-
-        <!-- 検索フィールド -->
-        <EditText
-            android:id="@+id/searchInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints="search"
-            android:drawableEnd="@android:drawable/ic_search_category_default"
-            android:drawablePadding="8dp"
-            android:hint="@string/search_hint"
-            android:inputType="text"
-            android:padding="12dp" />
-
-        <!-- 設定ボタン -->
-        <Button
-            android:id="@+id/settingsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/button_settings" />
-    </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"/>
 
 <!--投稿が表示されるセクション-->
     <androidx.recyclerview.widget.RecyclerView
