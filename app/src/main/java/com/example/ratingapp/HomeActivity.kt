@@ -20,7 +20,7 @@ import com.example.ratingapp.databinding.HomeMainBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding:HomeMainBinding
