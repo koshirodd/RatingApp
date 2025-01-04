@@ -51,4 +51,6 @@
     <string name="sample_description">
         This is a sample description for a post.
     </string>
+    <string name="my_post_main_title">自分の投稿一覧</string>
+    <string name="header_page_title">ページタイトル</string>
 </resources>

@@ -2,18 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
 
     <TextView
         android:id="@+id/search_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="検索結果画面は未実装なのでホームに戻る。"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="sample text."
         android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:clickable="true"
-        android:focusable="true"
-        tools:ignore="MissingConstraints"/>
+        android:textSize="48sp"
+        android:textColor="@android:color/black" />
+
+    <include
+        android:id="@+id/bottom_bar"
+        layout="@layout/bottom_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,27 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/post_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:paddingHorizontal="50dp"
-        android:contentDescription="post_image"
-        android:src="@drawable/test_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/post_text_view"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/post_image_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="10dp"
-        android:text="@string/sample_description"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="0dp"
+        app:strokeColor="@android:color/black"
+        app:strokeWidth="2dp">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/post_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:paddingHorizontal="25dp"
+                android:contentDescription="post_image"
+                android:src="@drawable/test_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/post_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/post_image_view"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="5dp"
+                android:text="@string/sample_description"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
