@@ -96,12 +96,14 @@ class HomeActivity : BaseActivity() {
     }
 
 
+
+    @SuppressLint("SimpleDateFormat")
     fun onCameraImageClick(view: View){
-        val dateformat = SimpleDateFormat("yyyyMMddHHmmss")
+        val dateFormat = SimpleDateFormat("yyyyMMddHHmmss")
         val now = Date()
 
-        val nowstr = dateformat.format(now)
-        val filename = "CameraIntentSamplePhoto_${nowstr}.jpg"
+        val nowStr = dateFormat.format(now)
+        val filename = "CameraIntentSamplePhoto_${nowStr}.jpg"
 
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, filename)
